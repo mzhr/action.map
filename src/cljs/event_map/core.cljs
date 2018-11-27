@@ -1,6 +1,5 @@
 (ns event-map.core
-  (:require [baking-soda.core :as b]
-            [day8.re-frame.http-fx]
+  (:require [day8.re-frame.http-fx]
             [reagent.core :as r]
             [re-frame.core :as rf]
             [goog.events :as events]
@@ -11,51 +10,43 @@
             [secretary.core :as secretary])
   (:import goog.History))
 
-; the navbar components are implemented via baking-soda [1]
-; library that provides a ClojureScript interface for Reactstrap [2]
-; Bootstrap 4 components.
-; [1] https://github.com/gadfly361/baking-soda
-; [2] http://reactstrap.github.io/
-
 (defn nav-link [uri title page]
-  [b/NavItem
-   [b/NavLink
+  [:div.nav-item
+   [:a
     {:href   uri
      :active (when (= page @(rf/subscribe [:page])) "active")}
     title]])
 
-(defn navbar []
+(defn nav-bar []
   (r/with-let [expanded? (r/atom true)]
-    [b/Navbar {:light true
-               :class-name "navbar-dark bg-primary"
-               :expand "md"}
-     [b/NavbarBrand {:href "/"} "event-map"]
-     [b/NavbarToggler {:on-click #(swap! expanded? not)}]
-     [b/Collapse {:is-open @expanded? :navbar true}
-      [b/Nav {:class-name "mr-auto" :navbar true}
-       [nav-link "#/" "Home" :home]
-       [nav-link "#/about" "About" :about]]]]))
+    [:div.nav-bar
+     [:div.nav-bar-title.nav-bar-item
+      [:a {:href "#/"} "events."]]
+     [:nav.nav-bar-item
+      [nav-link "#/" "Map" :map]
+      [nav-link "#/events" "Events" :events]
+      [nav-link "#/about" "About" :about]]]))
 
 (defn about-page []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     [:img {:src "/img/warning_clojure.png"}]]]])
-
-(defn home-page []
   [:div.container
    (when-let [docs @(rf/subscribe [:docs])]
      [:div.row>div.col-sm-12
       [:div {:dangerouslySetInnerHTML
              {:__html (md->html docs)}}]])])
 
+(defn map-page []
+  (let [app-events @(rf/subscribe [:app-events])]
+    [:div.container
+     ;[:div#map {:style {:height "360px"}}]
+     [:p app-events]]))
+
 (def pages
-  {:home #'home-page
+  {:map #'map-page
    :about #'about-page})
 
 (defn page []
   [:div
-   [navbar]
+   [nav-bar]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -64,7 +55,7 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (rf/dispatch [:navigate :home]))
+  (rf/dispatch [:navigate :map]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:navigate :about]))
@@ -87,8 +78,9 @@
   (r/render [#'page] (.getElementById js/document "app")))
 
 (defn init! []
-  (rf/dispatch-sync [:navigate :home])
+  (rf/dispatch-sync [:navigate :map])
   (ajax/load-interceptors!)
   (rf/dispatch [:fetch-docs])
+  (rf/dispatch [:fetch-app-events])
   (hook-browser-navigation!)
   (mount-components))

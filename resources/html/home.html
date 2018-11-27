@@ -6,8 +6,14 @@
       <title>Welcome to event-map</title>
   </head>
   <body>
-    
+    <div id="nav-bar"></div>
     <div id="app">
+
+        <div class="splash-screen">
+            <p class="splash-screen-text">events.</p>
+        </div>
+
+      <!--
       <div class="container-fluid">
         <div class="card-deck">
           <div class="card-block">
@@ -26,21 +32,18 @@
           </div>
         </div>
       </div>
+      -->
     </div>
 
     <!-- scripts and styles -->
-    {% style "/assets/bootstrap/css/bootstrap.min.css" %}
-    {% style "/assets/font-awesome/css/all.css" %}
     {% style "/css/screen.css" %}
-
-    {% script "/assets/jquery/jquery.min.js" %}
-    {% script "/assets/font-awesome/js/all.js" %}
-    {% script "/assets/tether/dist/js/tether.min.js" %}
-    {% script "/assets/bootstrap/js/bootstrap.min.js" %}
 
     <script type="text/javascript">
         var csrfToken = "{{csrf-token}}";
     </script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
     {% script "/js/app.js" %}
   </body>
 </html>

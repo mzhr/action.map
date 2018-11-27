@@ -12,14 +12,19 @@
 (defstate db
   :start (:db db*))
 
-(defn create-user [user]
-  (mc/insert db "users" user))
+(defn create-event [event]
+  (mc/insert db "event_map" event))
 
-(defn update-user [id first-name last-name email]
-  (mc/update db "users" {:_id id}
-             {$set {:first_name first-name
-                    :last_name last-name
-                    :email email}}))
+(defn update-event [id title description lat lon etime]
+  (mc/update db "event_map" {:_id id}
+             {$set {:title title
+                    :description description
+                    :lat lat
+                    :lon lon
+                    :etime etime}}))
 
-(defn get-user [id]
-  (mc/find-one-as-map db "users" {:_id id}))
+(defn get-event [id]
+  (mc/find-one-as-map db "event_map" {:_id id}))
+
+(defn get-all-events []
+  (mc/find-maps db "event_map"))

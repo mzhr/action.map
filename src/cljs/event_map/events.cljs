@@ -14,13 +14,26 @@
   (fn [db [_ docs]]
     (assoc db :docs docs)))
 
+(rf/reg-event-db
+ :set-app-events
+ (fn [db [_ app-events]]
+   (assoc db :app-events app-events)))
+
 (rf/reg-event-fx
   :fetch-docs
   (fn [_ _]
     {:http-xhrio {:method          :get
-                  :uri             "/docs"
+                  :uri             "/api/docs"
                   :response-format (ajax/raw-response-format)
-                  :on-success       [:set-docs]}}))
+                  :on-success      [:set-docs]}}))
+
+(rf/reg-event-fx
+ :fetch-app-events
+ (fn [_ _]
+   {:http-xhrio {:method          :get
+                 :uri             "/api/events"
+                 :response-format (ajax/raw-response-format)
+                 :on-success      [:set-app-events]}}))
 
 (rf/reg-event-db
   :common/set-error
@@ -38,6 +51,11 @@
   :docs
   (fn [db _]
     (:docs db)))
+
+(rf/reg-sub
+ :app-events
+ (fn [db _]
+   (:app-events db)))
 
 (rf/reg-sub
   :common/error
