@@ -7,46 +7,18 @@
             [markdown.core :refer [md->html]]
             [event-map.ajax :as ajax]
             [event-map.events]
-            [secretary.core :as secretary])
+            [secretary.core :as secretary]
+            [event-map.nav :as app-nav]
+            [event-map.views :as app-views])
   (:import goog.History))
 
-(defn nav-link [uri title page]
-  [:div.nav-item
-   [:a
-    {:href   uri
-     :active (when (= page @(rf/subscribe [:page])) "active")}
-    title]])
-
-(defn nav-bar []
-  (r/with-let [expanded? (r/atom true)]
-    [:div.nav-bar
-     [:div.nav-bar-title.nav-bar-item
-      [:a {:href "#/"} "events."]]
-     [:nav.nav-bar-item
-      [nav-link "#/" "Map" :map]
-      [nav-link "#/events" "Events" :events]
-      [nav-link "#/about" "About" :about]]]))
-
-(defn about-page []
-  [:div.container
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row>div.col-sm-12
-      [:div {:dangerouslySetInnerHTML
-             {:__html (md->html docs)}}]])])
-
-(defn map-page []
-  (let [app-events @(rf/subscribe [:app-events])]
-    [:div.container
-     ;[:div#map {:style {:height "360px"}}]
-     [:p app-events]]))
-
 (def pages
-  {:map #'map-page
-   :about #'about-page})
+  {:map #'app-views/map-page
+   :about #'app-views/about-page})
 
 (defn page []
   [:div
-   [nav-bar]
+   [app-nav/nav-bar]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------

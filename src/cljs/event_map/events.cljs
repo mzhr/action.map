@@ -1,6 +1,7 @@
 (ns event-map.events
   (:require [re-frame.core :as rf]
-            [ajax.core :as ajax]))
+            [ajax.core :as ajax]
+            [cognitect.transit :as t]))
 
 ;;dispatchers
 
@@ -17,7 +18,8 @@
 (rf/reg-event-db
  :set-app-events
  (fn [db [_ app-events]]
-   (assoc db :app-events app-events)))
+   (assoc db :app-events
+          (t/read (t/reader :json) app-events))))
 
 (rf/reg-event-fx
   :fetch-docs
