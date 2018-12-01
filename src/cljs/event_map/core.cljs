@@ -8,18 +8,8 @@
             [event-map.ajax :as ajax]
             [event-map.events]
             [secretary.core :as secretary]
-            [event-map.nav :as app-nav]
             [event-map.views :as app-views])
   (:import goog.History))
-
-(def pages
-  {:map #'app-views/map-page
-   :about #'app-views/about-page})
-
-(defn page []
-  [:div
-   [app-nav/nav-bar]
-   [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
 ;; Routes
@@ -27,9 +17,19 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (rf/dispatch [:navigate :map]))
+  (rf/dispatch [:navigate :about]))
+
+(secretary/defroute "/events" []
+  (rf/dispatch [:toggle-right-menu])
+  (rf/dispatch [:navigate :events]))
+
+(secretary/defroute "/events/:id" [id]
+  (rf/dispatch [:toggle-right-menu])
+  (rf/dispatch [:navigate :event-item])
+  (rf/dispatch [:set-current-event id]))
 
 (secretary/defroute "/about" []
+  (rf/dispatch [:toggle-right-menu])
   (rf/dispatch [:navigate :about]))
 
 ;; -------------------------
@@ -47,12 +47,12 @@
 ;; Initialize app
 (defn mount-components []
   (rf/clear-subscription-cache!)
-  (r/render [#'page] (.getElementById js/document "app")))
+  (r/render [#'app-views/page-view] (.getElementById js/document "app")))
 
 (defn init! []
   (rf/dispatch-sync [:navigate :map])
   (ajax/load-interceptors!)
-  (rf/dispatch [:fetch-docs])
+  (rf/dispatch [:fetch-docs-about])
   (rf/dispatch [:fetch-app-events])
   (hook-browser-navigation!)
   (mount-components))

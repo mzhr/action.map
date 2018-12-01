@@ -42,7 +42,7 @@
                  [selmer "1.12.5"]]
 
   :min-lein-version "2.0.0"
-  
+
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
@@ -60,7 +60,7 @@
    :css-dirs ["resources/public/css"]
    :nrepl-middleware
    [cider/wrap-cljs-repl cider.piggieback/wrap-cljs-repl]}
-  
+
 
   :profiles
   {:uberjar {:omit-source true

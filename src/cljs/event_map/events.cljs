@@ -11,23 +11,45 @@
     (assoc db :page page)))
 
 (rf/reg-event-db
-  :set-docs
-  (fn [db [_ docs]]
-    (assoc db :docs docs)))
+  :set-docs-about
+  (fn [db [_ about]]
+    (assoc db :docs-about about)))
+
+(rf/reg-event-db
+ :set-current-event
+ (fn [db [_ id]]
+   (assoc db :current-event id)))
+
+(rf/reg-event-db
+ :toggle-right-menu
+ (fn [db [_ ]]
+   (assoc db :right-menu true)))
+
+(rf/reg-event-db
+ :close-right-menu
+ (fn [db [_ ]]
+   (assoc db :right-menu false)))
+
+(defn reformat-event [event]
+  (zipmap (map #(keyword %) (keys event)) (vals event)))
+
+(defn reformat-events [events]
+  (zipmap (map #(:event_id %) events) events))
 
 (rf/reg-event-db
  :set-app-events
  (fn [db [_ app-events]]
    (assoc db :app-events
-          (t/read (t/reader :json) app-events))))
+          (reformat-events (map reformat-event
+               (t/read (t/reader :json) app-events))))))
 
 (rf/reg-event-fx
-  :fetch-docs
+  :fetch-docs-about
   (fn [_ _]
     {:http-xhrio {:method          :get
-                  :uri             "/api/docs"
+                  :uri             "/api/docs/about"
                   :response-format (ajax/raw-response-format)
-                  :on-success      [:set-docs]}}))
+                  :on-success      [:set-docs-about]}}))
 
 (rf/reg-event-fx
  :fetch-app-events
@@ -50,14 +72,25 @@
     (:page db)))
 
 (rf/reg-sub
-  :docs
+  :docs-about
   (fn [db _]
-    (:docs db)))
+    (:docs-about db)))
+
+(rf/reg-sub
+ :right-menu
+ (fn [db _]
+   (:right-menu db)))
 
 (rf/reg-sub
  :app-events
  (fn [db _]
    (:app-events db)))
+
+(rf/reg-sub
+ :current-event
+ (fn [db _]
+   (:current-event db)))
+
 
 (rf/reg-sub
   :common/error

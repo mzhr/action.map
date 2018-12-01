@@ -16,7 +16,7 @@
 
   (GET "/api/events" []
        (events-controller/events-get))
-  (GET "/api/docs" []
-       (-> (response/ok (-> "docs/docs.md" io/resource slurp))
+  (GET "/api/docs/about" []
+       (-> (response/ok (-> "docs/about.md" io/resource slurp))
            (response/header "Content-Type" "text/plain; charset=utf-8"))))
 
