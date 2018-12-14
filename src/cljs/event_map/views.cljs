@@ -8,7 +8,7 @@
 
 (defn app-view []
   [:div.app-container
-   [map/map-page]
+   [map/map-view]
    [right-menu/right-menu-view]])
 
 (defn page-view []

@@ -4,8 +4,7 @@
             [event-map.views.about :as about]
             [event-map.views.event-list :as event-list]
             [event-map.views.event-item :as event-item]
-            [event-map.views.error :as error]
-            ))
+            [event-map.views.error :as error]))
 
 (def right-menu-views
   {:about (fn [_] about/about-view)
@@ -17,9 +16,9 @@
   (let [content @(rf/subscribe [:page])]
     [:div.right-menu
      [:div.close-button
-      {:on-click (fn [] (rf/dispatch [:close-right-menu]))}]
+       {:on-click (fn [] (rf/dispatch [:close-right-menu]))} "close"]
      [(content right-menu-views)]]))
 
 (defn right-menu-view []
    (let [open @(rf/subscribe [:right-menu])]
-     (if open (menu-content) [:div.right-menu-empty])))
+     (if open (menu-content) [:div.right-menu-removing])))

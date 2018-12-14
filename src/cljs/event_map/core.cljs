@@ -18,6 +18,7 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
+  (rf/dispatch [:close-right-menu])
   (rf/dispatch [:navigate :about]))
 
 (secretary/defroute "/events" []
@@ -56,9 +57,9 @@
   (r/render [#'app-views/page-view] (.getElementById js/document "app")))
 
 (defn init! []
-  (rf/dispatch-sync [:navigate :map])
+  (rf/dispatch-sync [:fetch-app-events])
   (ajax/load-interceptors!)
+  (rf/dispatch-sync [:navigate :map])
   (rf/dispatch [:fetch-docs-about])
-  (rf/dispatch [:fetch-app-events])
   (hook-browser-navigation!)
   (mount-components))

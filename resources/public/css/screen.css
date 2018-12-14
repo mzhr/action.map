@@ -1,7 +1,7 @@
 html,
 body,
 #app {
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -21,7 +21,8 @@ p, ul {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #ed1b24;
+    background-color: #333;
+    color: #fff;
 }
 
 .splash-screen-text {
@@ -30,7 +31,7 @@ p, ul {
 }
 
 .nav-bar {
-    background-color: #000;
+    background-color: #333;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -40,7 +41,7 @@ p, ul {
 .nav-bar-title a {
     color: #fff;
     margin: 0;
-    font-weight: bold;
+    font-weight: lighter;
     font-size: 24px;
     text-decoration: none;
 }
@@ -63,7 +64,6 @@ nav {
 
 .nav-item a {
     color: #fff;
-    font-weight: bold;
     text-decoration: none;
     margin-left: 1.5em;
     font-size: 12px;
@@ -87,15 +87,40 @@ nav {
     position: relative;
 }
 
+@keyframes right-menu-open {
+    from {right: -300px}
+    to {right: 0px}
+}
+
+@keyframes right-menu-close {
+    from {right: 0}
+    to {right: -300px}
+}
+
 .right-menu {
     z-index: 9999;
     position: absolute;
     background-color: #fff;
     flex: 1;
     top: 0;
-    bottom: 0;
+    animation: right-menu-open .2s;
     right: 0;
-    width: 250px;
+    bottom: 0;
+    width: 300px;
+    overflow-y: scroll;
+}
+
+.right-menu-removing {
+    animation: right-menu-close .2s;
+    z-index: 9999;
+    position: absolute;
+    background-color: #fff;
+    flex: 1;
+    top: 0;
+    animation: right-menu-close .1s;
+    right: -300px;
+    bottom: 0;
+    width: 300px;
     overflow-y: scroll;
 }
 
@@ -109,32 +134,48 @@ nav {
     width: 100%;
 }
 
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    color: #333 !important;
+}
+
 .close-button {
     position: absolute;
+    z-index: 10000;
     top: 10px;
     right: 10px;
-    height: 32px;
-    width: 32px;
-    background-color: #4d4d4d;
+    font-weight: bold;
+    color: #4d4d4d;
 }
 
 .close-button:hover, .close-button:active {
-    background-color: #333;
+    color: #333;
 }
 
 .event-item-back-button {
-    height: 32px;
-    width: 32px;
-    background-color: #4d4d4d;
-    margin: 1em;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-weight: bold;
+
+    color: #4d4d4d;
 }
 
 .event-item-back-button:hover, .event-item-back-button:active {
-    background-color: #333;
+    color: #333;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 .about-container {
     margin: 1em;
+    animation: fade-in .3s;
+}
+
+.event-list-container {
+    animation: fade-in .3s;
 }
 
 .event-list-item {
@@ -165,7 +206,9 @@ nav {
 }
 
 .event-item {
+    animation: fade-in .3s;
     margin: 1em;
+    margin-top: 3em;
 }
 
 .event-item-title {

@@ -1,6 +1,7 @@
 (ns event-map.events
   (:require [re-frame.core :as rf]
             [ajax.core :as ajax]
+            [secretary.core :as secretary]
             [cognitect.transit :as t]))
 
 ;;dispatchers

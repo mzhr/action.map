@@ -11,3 +11,9 @@ I made this app because I wanted to create an app to showcase a bunch of local e
 
 If you want to help me in this project visit the opensource github project at github.com/mzhr or email me at mzhr@protonmail.com
 
+### Licenses
+
+##### Marker Icon
+
+Creator: https://www.iconfinder.com/paomedia
+License: https://creativecommons.org/licenses/by/3.0/

@@ -8,7 +8,7 @@
               event (get @(rf/subscribe [:app-events]) event-id)]
        [:div.event-item
         [:div.event-item-back-button
-         {:on-click #(rf/dispatch [:navigate :event-list])}]
+         {:on-click #(rf/dispatch [:navigate :event-list])} "back"]
         [:p.event-item-title (:name event)]
         [:div.event-item-metainfo
          [:p.event-item-time (take 10 (:time event))]

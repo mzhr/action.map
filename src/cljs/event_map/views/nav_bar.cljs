@@ -20,7 +20,7 @@
   (r/with-let [expanded? (r/atom true)]
     [:div.nav-bar
      [:div.nav-bar-title.nav-bar-item
-      [:a {:href "#/"} "events."]]
+      [:a {:href "#/"} "action.map"]]
      [:nav.nav-bar-item
-      [nav-link "Events" :event-list]
-      [nav-link "About" :about]]]))
+      [nav-link "events" :event-list]
+      [nav-link "about" :about]]]))
