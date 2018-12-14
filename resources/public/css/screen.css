@@ -186,6 +186,12 @@ nav {
 
 .event-item-metainfo p {
     margin:  0;
-    font-weight
+}
+
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 

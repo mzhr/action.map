@@ -38,7 +38,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.7.1"]
                  [ring/ring-defaults "0.3.2"]
-                 [secretary "1.2.3"]
+                 [clj-commons/secretary "1.2.4"]
                  [selmer "1.12.5"]]
 
   :min-lein-version "2.0.0"

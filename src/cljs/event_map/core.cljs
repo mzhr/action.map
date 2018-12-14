@@ -8,6 +8,7 @@
             [event-map.ajax :as ajax]
             [event-map.events]
             [secretary.core :as secretary]
+            [cognitect.transit :as t]
             [event-map.views :as app-views])
   (:import goog.History))
 
@@ -21,16 +22,21 @@
 
 (secretary/defroute "/events" []
   (rf/dispatch [:toggle-right-menu])
-  (rf/dispatch [:navigate :events]))
+  (rf/dispatch [:navigate :event-list]))
 
 (secretary/defroute "/events/:id" [id]
+  (js/console.log (t/read (t/reader :json) (js/Number. id)))
   (rf/dispatch [:toggle-right-menu])
   (rf/dispatch [:navigate :event-item])
-  (rf/dispatch [:set-current-event id]))
+  (rf/dispatch [:set-current-event (t/read (t/reader :json) (js/Number. id))]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:toggle-right-menu])
   (rf/dispatch [:navigate :about]))
+
+(secretary/defroute "*" []
+  (rf/dispatch [:toggle-right-menu])
+  (rf/dispatch [:navigate :error]))
 
 ;; -------------------------
 ;; History

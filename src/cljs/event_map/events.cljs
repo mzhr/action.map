@@ -4,7 +4,6 @@
             [cognitect.transit :as t]))
 
 ;;dispatchers
-
 (rf/reg-event-db
   :navigate
   (fn [db [_ page]]
@@ -65,7 +64,6 @@
     (assoc db :common/error error)))
 
 ;;subscriptions
-
 (rf/reg-sub
   :page
   (fn [db _]
@@ -90,7 +88,6 @@
  :current-event
  (fn [db _]
    (:current-event db)))
-
 
 (rf/reg-sub
   :common/error
