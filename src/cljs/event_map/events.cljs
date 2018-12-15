@@ -21,6 +21,11 @@
    (assoc db :current-event id)))
 
 (rf/reg-event-db
+ :set-event-search-filter
+ (fn [db [_ filter]]
+   (assoc db :event-search-filter filter)))
+
+(rf/reg-event-db
  :toggle-right-menu
  (fn [db [_ ]]
    (assoc db :right-menu true)))
@@ -92,6 +97,11 @@
  :loading?
  (fn [db _]
    (:loading? db)))
+
+(rf/reg-sub
+ :event-search-filter
+ (fn [db _]
+   (:event-search-filter db)))
 
 (rf/reg-sub
  :current-event

@@ -30,7 +30,6 @@
     (rf/dispatch [:set-current-event (:event_id event)])))
 
 (defn add-event-markers [map-view app-events]
-  (js/console.log app-events)
   (doseq [event (into [] app-events)]
     (let [marker (.marker js/L (clj->js [(:lat event) (:lon event)]) (clj->js {:icon (get-marker-icon)}))]
       (.addTo (.on marker

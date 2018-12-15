@@ -219,6 +219,13 @@ nav {
     animation: fade-in .3s;
 }
 
+.event-list-empty {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
 .event-list-item {
     padding: 1em;
 }
@@ -244,6 +251,19 @@ nav {
 .event-list-item-metainfo {
     display: flex;
     justify-content: space-between;
+}
+
+.search-container {
+    display: flex;
+}
+
+.search-bar {
+    border-radius: 20px;
+    margin: 4em 1em 1em 1em;
+    padding: 0.5em 1em;
+    border: none;
+    background-color: #eee;
+    flex: 1;
 }
 
 .event-item {
