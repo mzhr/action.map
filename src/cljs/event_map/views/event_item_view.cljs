@@ -1,14 +1,18 @@
 (ns event-map.views.event-item
   (:require [reagent.core :as r]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [secretary.core :as secretary]
+            ))
+
+(defn event-item-view-back []
+  [:div.event-item-back-button
+   {:on-click #(secretary/dispatch! "/events")} "back"])
 
 (defn event-item-view [id]
   [:div.event-item-container
    (let [event-id @(rf/subscribe [:current-event])
               event (get @(rf/subscribe [:app-events]) event-id)]
        [:div.event-item
-        [:div.event-item-back-button
-         {:on-click #(rf/dispatch [:navigate :event-list])} "back"]
         [:p.event-item-title (:name event)]
         [:div.event-item-metainfo
          [:p.event-item-time (take 10 (:time event))]

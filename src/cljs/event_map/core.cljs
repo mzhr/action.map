@@ -63,7 +63,7 @@
                           (do
                             (.clearInterval js/window @interval)
                             (r/render [#'app-views/page-view] (.getElementById js/document "app")))
-                          )) 500))))
+                          )) 1000))))
 
 (defn init! []
   (ajax/load-interceptors!)
