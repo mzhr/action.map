@@ -5,8 +5,8 @@
             ))
 
 (defn event-item-view-back []
-  [:div.event-item-back-button
-   {:on-click #(secretary/dispatch! "/events")} "back"])
+  [:a.event-item-back-button
+   {:href "#/events"} "back"])
 
 (defn event-item-view [id]
   [:div.event-item-container

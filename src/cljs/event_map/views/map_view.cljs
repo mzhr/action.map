@@ -25,9 +25,7 @@
 
 (defn get-open-event-dispatch [event]
   (fn [m]
-    (rf/dispatch [:toggle-right-menu])
-    (rf/dispatch [:navigate :event-item])
-    (rf/dispatch [:set-current-event (:event_id event)])))
+    (js/window.location.assign (str "#/events/" (:event_id event)))))
 
 (defn add-event-markers [map-view app-events]
   (doseq [event (into [] app-events)]

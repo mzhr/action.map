@@ -7,9 +7,9 @@
             [event-map.views.error :as error]))
 
 (def right-menu-views
-  {:about {:view (fn [_] about/about-view) :back [:div]}
-   :event-list {:view (fn [_] event-list/event-list-view) :back [:div]}
-   :error {:view (fn [_] error/error-view) :back [:div]}
+  {:about {:view (fn [_] about/about-view) :back [:a]}
+   :event-list {:view (fn [_] event-list/event-list-view) :back [:a]}
+   :error {:view (fn [_] error/error-view) :back [:a]}
    :event-item {:view (fn [_] event-item/event-item-view) :back (event-item/event-item-view-back)}})
 
 (defn menu-content []
@@ -17,8 +17,8 @@
     [:div.right-menu
      [:div.right-menu-nav
       (:back (content right-menu-views))
-      [:div.close-button
-       {:on-click (fn [] (rf/dispatch [:close-right-menu]))} "close"]]
+      [:a.close-button
+       {:href "#/"} "close"]]
      [:div.right-menu-content
       [(:view (content right-menu-views))]]]))
 

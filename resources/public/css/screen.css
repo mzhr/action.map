@@ -197,8 +197,10 @@ nav {
     pointer-events: none;
 }
 
-.right-menu-nav div {
+.right-menu-nav a {
     pointer-events:auto;
+    text-decoration: none;
+    color: #333;
 }
 
 .right-menu-nav div:hover, .right-menu-nav div:active {
@@ -227,17 +229,28 @@ nav {
 }
 
 .event-list-item {
-    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .event-list-item:nth-child(even) {
     background-color: #eee;
 }
 
+.event-list-item a {
+    text-decoration: none;
+    color: #333;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
 .event-list-item:hover, .event-list-item:active {
     background-color: #ddd;
 }
-
 
 .event-list-item p {
     margin: 0;
