@@ -30,6 +30,7 @@
     (rf/dispatch [:set-current-event (:event_id event)])))
 
 (defn add-event-markers [map-view app-events]
+  (js/console.log app-events)
   (doseq [event (into [] app-events)]
     (let [marker (.marker js/L (clj->js [(:lat event) (:lon event)]) (clj->js {:icon (get-marker-icon)}))]
       (.addTo (.on marker
@@ -39,9 +40,9 @@
       (.bindPopup marker (:name event)))))
 
 (defn map-did-mount []
-  (let [map-view (create-map)
-        app-events (vals @(rf/subscribe [:app-events]))]
-    (add-event-markers map-view app-events)))
+  (let [map-view (create-map)]
+    (when-let [app-events (vals @(rf/subscribe [:app-events]))]
+      (add-event-markers map-view app-events))))
 
 (defn map-render []
   [:div.map-container

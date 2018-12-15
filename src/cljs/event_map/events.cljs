@@ -39,9 +39,11 @@
 (rf/reg-event-db
  :set-app-events
  (fn [db [_ app-events]]
-   (assoc db :app-events
+   (assoc db
+          :app-events
           (reformat-events (map reformat-event
-               (t/read (t/reader :json) app-events))))))
+                                (t/read (t/reader :json) app-events)))
+          :loading? false)))
 
 (rf/reg-event-fx
   :fetch-docs-about
@@ -53,11 +55,12 @@
 
 (rf/reg-event-fx
  :fetch-app-events
- (fn [_ _]
+ (fn [{db :db} _]
    {:http-xhrio {:method          :get
                  :uri             "/api/events"
                  :response-format (ajax/raw-response-format)
-                 :on-success      [:set-app-events]}}))
+                 :on-success      [:set-app-events]}
+    :db  (assoc db :loading? true)}))
 
 (rf/reg-event-db
   :common/set-error
@@ -84,6 +87,11 @@
  :app-events
  (fn [db _]
    (:app-events db)))
+
+(rf/reg-sub
+ :loading?
+ (fn [db _]
+   (:loading? db)))
 
 (rf/reg-sub
  :current-event

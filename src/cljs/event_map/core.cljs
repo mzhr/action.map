@@ -54,11 +54,20 @@
 ;; Initialize app
 (defn mount-components []
   (rf/clear-subscription-cache!)
-  (r/render [#'app-views/page-view] (.getElementById js/document "app")))
+  (let [loading? @(rf/subscribe [:loading?])
+        interval (atom nil)]
+    (reset! interval (.setInterval
+                      js/window
+                      (fn []
+                        (when loading?
+                          (do
+                            (.clearInterval js/window @interval)
+                            (r/render [#'app-views/page-view] (.getElementById js/document "app")))
+                          )) 500))))
 
 (defn init! []
-  (rf/dispatch-sync [:fetch-app-events])
   (ajax/load-interceptors!)
+  (rf/dispatch-sync [:fetch-app-events])
   (rf/dispatch-sync [:navigate :map])
   (rf/dispatch [:fetch-docs-about])
   (hook-browser-navigation!)
